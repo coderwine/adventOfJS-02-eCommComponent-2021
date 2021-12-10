@@ -1,26 +1,21 @@
 // Find Elements
+const addBtns = document.querySelectorAll('button');
+const emptyCart = document.querySelector('.empty');
 const cart = document.querySelector('.cart-summary');
+const finalCost = document.querySelector('.totals');
 const subTotals = document.querySelector('.subtotal');
 const tax = document.querySelector('.tax');
 const total = document.getElementById('final-cost');
-// const addBtn = document.querySelector('.add');
-const addBtns = document.querySelectorAll('button');
 
 let taxRate = .0975 //Tax Rate for TN
-let subTotal = 0;
-let inCart = []
-
-const cartTotal = (sub) => {
-    let applyTax = sub * taxRate;
-    let total = sub + applyTax;
-    subTotals.innerText = `$${subTotal.toFixed(2)}`;
-    tax.innerText = `$${$applyTax.toFixed(2)}`;
-    return(total.toFixed(2));
-    // subTotals.innerText = Math.round(subTotal * 100 / 100).toFixed(2);
-    // tax.innerText = Math.round(applyTax * 100 / 100).toFixed(2);
-    // return(Math.round(total * 100 / 100).toFixed(2));
+const getLocation = () => {
+    
 }
-
+// let currentLocation = getCurrentPosition();
+// console.log('GEO:', currentLocation)
+let subTotal = 0;
+let inCart = [];
+emptyCart.style = 'display: block';
 
 function addToCart(pos) {
     let arrPos = pos -1
@@ -44,7 +39,8 @@ function addToCart(pos) {
 }
 
 function cartBuild(item) {
-    console.log(menuItems[item])
+    console.log(menuItems[item]);
+    emptyCart.style = 'display: none';
 
     let newItem = menuItems[item];
     let name = newItem.name;
@@ -108,9 +104,10 @@ function cartBuild(item) {
         li.appendChild(content);
         li.appendChild(qty_wrap);
         li.appendChild(sub);
-        cart.appendChild(li);
+        // cart.appendChild(li);
+        cart.insertBefore(li, finalCost);
 
-        console.log(sub.innerText)
+        console.log(inCart);
     })
 
     subTotal += price;
@@ -119,8 +116,19 @@ function cartBuild(item) {
 
 function theBill() {
     let finalCost = cartTotal(subTotal);
-    total.innerText = `$${finalCost}`;
 
+    const cartTotal = (sub) => {
+        let applyTax = sub * taxRate;
+        let total = sub + applyTax;
+        subTotals.innerText = `$${subTotal.toFixed(2)}`;
+        tax.innerText = `$${$applyTax.toFixed(2)}`;
+        return(total.toFixed(2));
+        // subTotals.innerText = Math.round(subTotal * 100 / 100).toFixed(2);
+        // tax.innerText = Math.round(applyTax * 100 / 100).toFixed(2);
+        // return(Math.round(total * 100 / 100).toFixed(2));
+    }
+
+    total.innerText = `$${finalCost}`;
 
 
 }
