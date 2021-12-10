@@ -22,10 +22,11 @@
           <div class="content">
             <p class="menu-item">French Fries with Ketchup</p>
             <p class="price">$2.23</p>
-            <button class="in-cart">
-              <img src="images/check.svg" alt="Check" />
-              In Cart
-            </button>
+            <button 
+            class="add" 
+            id="1"
+            onClick="addToCart(1)" >
+              Add to Cart </button>
           </div>
         </li>
         <li>
@@ -35,7 +36,11 @@
           <div class="content">
             <p class="menu-item">Salmon and Vegetables</p>
             <p class="price">$5.12</p>
-            <button class="add">Add to Cart</button>
+            <button 
+              class="add" 
+              id="2"
+              onClick="addToCart(2)" >
+              Add to Cart</button>
           </div>
         </li>
         <li>
@@ -45,7 +50,11 @@
           <div class="content">
             <p class="menu-item">Spaghetti with Meat Sauce</p>
             <p class="price">$7.82</p>
-            <button class="add">Add to Cart</button>
+            <button 
+              class="add" 
+              id="3"
+              onClick="addToCart(3)" >
+              Add to Cart</button>
           </div>
         </li>
         <li>
@@ -55,7 +64,11 @@
           <div class="content">
             <p class="menu-item">Bacon, Eggs, and Toast</p>
             <p class="price">$5.99</p>
-            <button class="add">Add to Cart</button>
+            <button 
+              class="add" 
+              id="4"
+              onClick="addToCart(4)" >
+              Add to Cart</button>
           </div>
         </li>
         <li>
@@ -65,7 +78,11 @@
           <div class="content">
             <p class="menu-item">Chicken Salad with Parmesan</p>
             <p class="price">$6.98</p>
-            <button class="add">Add to Cart</button>
+            <button 
+              class="add" 
+              id="5"
+              onClick="addToCart(5)" >
+              Add to Cart</button>
           </div>
         </li>
         <li>
@@ -75,7 +92,11 @@
           <div class="content">
             <p class="menu-item">Fish Sticks and Fries</p>
             <p class="price">$6.34</p>
-            <button class="add">Add to Cart</button>
+            <button 
+              class="add" 
+              id="6"
+              onClick="addToCart(6)" >
+              Add to Cart</button>
           </div>
         </li>
       </ul>
@@ -83,7 +104,7 @@
 
     <div class="panel cart">
       <h1>Your Cart</h1>
-      <!-- <p class="empty">Your cart is empty.</p> -->
+      <p class="empty">Your cart is empty.</p>
 
       <ul class="cart-summary">
 
@@ -112,7 +133,7 @@
         </li>
 
         <!-- item 2 -->
-        <li>
+        <!-- <li>
           <div class="plate">
             <img src="images/plate__french-fries.png" alt="French Fries" class="plate" />
             <div class="quantity">2</div>
@@ -134,22 +155,22 @@
             $4.46
           </div>
         </li>
-      </ul>
+      </ul> -->
 
-      <div class="totals">
+      <!-- <div class="totals">
         <div class="line-item">
           <div class="label">Subtotal:</div>
-          <div class="amount price subtotal">$10.80</div>
+          <div class="amount price subtotal"></div>
         </div>
         <div class="line-item">
           <div class="label">Tax:</div>
-          <div class="amount price tax">$1.05</div>
+          <div class="amount price tax"></div>
         </div>
         <div class="line-item total">
           <div class="label">Total:</div>
-          <div class="amount price total">$11.85</div>
+          <div class="amount price total" id="final-cost"></div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
   <script src="app.js"></script>
