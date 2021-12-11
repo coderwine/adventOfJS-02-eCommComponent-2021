@@ -9,7 +9,7 @@ const total = document.getElementById('final-cost');
 
 let taxRate = .0975 //Tax Rate for TN
 const getLocation = () => {
-    
+
 }
 // let currentLocation = getCurrentPosition();
 // console.log('GEO:', currentLocation)
@@ -39,7 +39,7 @@ function addToCart(pos) {
 }
 
 function cartBuild(item) {
-    console.log(menuItems[item]);
+    console.log('Cart Build', menuItems[item]);
     emptyCart.style = 'display: none';
 
     let newItem = menuItems[item];
@@ -107,7 +107,7 @@ function cartBuild(item) {
         // cart.appendChild(li);
         cart.insertBefore(li, finalCost);
 
-        console.log(inCart);
+        // console.log(inCart);
     })
 
     subTotal += price;
@@ -115,20 +115,11 @@ function cartBuild(item) {
 }
 
 function theBill() {
-    let finalCost = cartTotal(subTotal);
-
-    const cartTotal = (sub) => {
-        let applyTax = sub * taxRate;
-        let total = sub + applyTax;
-        subTotals.innerText = `$${subTotal.toFixed(2)}`;
-        tax.innerText = `$${$applyTax.toFixed(2)}`;
-        return(total.toFixed(2));
-        // subTotals.innerText = Math.round(subTotal * 100 / 100).toFixed(2);
-        // tax.innerText = Math.round(applyTax * 100 / 100).toFixed(2);
-        // return(Math.round(total * 100 / 100).toFixed(2));
-    }
-
-    total.innerText = `$${finalCost}`;
-
+    console.log('The Bill',subTotals);
+    
+    subTotals.innerText = subtotal.toFixed(2);
+    let applyTax = sub * taxRate;
+    tax.innerText = applyTax.toFixed(2);
+    total.innerText = (subTotal + applyTax).toFixed(2);
 
 }
