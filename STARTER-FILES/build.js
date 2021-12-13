@@ -39,8 +39,10 @@ function addToCart(pos) {
 }
 
 function cartBuild(item) {
-    console.log('Cart Build', menuItems[item]);
     emptyCart.style = 'display: none';
+    while(cart.firstChild) {
+        cart.removeChild(cart.firstChild);
+    }
 
     let newItem = menuItems[item];
     let name = newItem.name;
@@ -53,7 +55,10 @@ function cartBuild(item) {
 
     // Create Build
     inCart.map(i => {
-        console.log(i);
+        console.log(i.count);
+        i.count += 1;
+        itemPrice = Number((i.price / 100).toFixed(2));
+
         let li = document.createElement('li');
         let thisPlate = document.createElement('div');
         let img = document.createElement('img');
@@ -70,25 +75,25 @@ function cartBuild(item) {
 
         //Attributes:
         thisPlate.className = 'plate';
-        img.src = `./images/${plate}`;
-        img.alt = alt;
+        img.src = `./images/${i.image}`;
+        img.alt = i.alt;
         img.className = 'plate';
-        qty.innerText = count;
+        qty.innerText = i.count;
         qty.className = 'quantity';
         content.className = 'content';
         title.className = 'menu-item';
-        title.innerText = name;
+        title.innerText = i.name;
         cost.className = 'price';
-        cost.innerText = `$${price}`;
+        cost.innerText = `$${itemPrice}`;
         qty_wrap.className = 'quantity__wrapper';
         decrease.className = 'decrease';
-        // decrease.setAttribute('onClick', #);
+        // decrease.setAttribute('onClick', () => decreaseCount());
         neg.src = './images/chevron.svg';
         increase.className = 'increase';
-        // decrease.setAttribute('onClick', #);
+        // increase.setAttribute('onClick', () => increaseCount());
         plus.src = './images/chevron.svg';
         sub.className = 'subtotal';
-        sub.innerText = `$${price * count}`;
+        sub.innerText = `$${itemPrice * i.count}`;
 
         //Set
         thisPlate.appendChild(img);
@@ -104,22 +109,43 @@ function cartBuild(item) {
         li.appendChild(content);
         li.appendChild(qty_wrap);
         li.appendChild(sub);
-        // cart.appendChild(li);
-        cart.insertBefore(li, finalCost);
+        cart.appendChild(li);
+        // cart.insertBefore(li, finalCost);
 
-        // console.log(inCart);
     })
 
+    console.log('AFTER CYCLE CART:', inCart)
+    // Need to evaluate the total cost depending on the array set.
     subTotal += price;
     theBill()
 }
 
 function theBill() {
-    console.log('The Bill',subTotals);
+    // console.log('The Bill',subTotals);
+    // console.log('SUBTOTAL', subTotal)
     
-    subTotals.innerText = subtotal.toFixed(2);
-    let applyTax = sub * taxRate;
+    subTotals.innerText = subTotal.toFixed(2);
+    let applyTax = subTotal * taxRate;
     tax.innerText = applyTax.toFixed(2);
     total.innerText = (subTotal + applyTax).toFixed(2);
 
 }
+
+// For Plate Count alterations WIP
+function increaseCount() {
+    console.log('Increased Value')
+}
+
+function decreaseCount() {
+    console.log('Increased Value')
+}
+
+/* NOTE: build status
+    Fixed issue with mutliposting the same item depending on the length of the array. 
+        - Current issues:
+            - Adding a count to previous plate when adding a second.
+            - Unable to increase/decrease count of single plate.
+                - Zero out plates, etc.
+            - Adjust subtotals for final bill cost.
+
+*/
