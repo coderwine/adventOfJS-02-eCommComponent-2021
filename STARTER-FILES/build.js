@@ -40,23 +40,30 @@ function addToCart(pos) {
 
 function cartBuild(item) {
     emptyCart.style = 'display: none';
+    let price;
+
     while(cart.firstChild) {
         cart.removeChild(cart.firstChild);
     }
 
-    let newItem = menuItems[item];
-    let name = newItem.name;
-    let price = Number((newItem.price / 100).toFixed(2));
-    let plate = newItem.image;
-    let alt = newItem.alt;
-    let count = newItem.count + 1;
-    inCart.push(newItem);
-    console.log('Cart', inCart)
+    // console.log(item)
+    if(item != undefined) {
+
+        let newItem = menuItems[item];
+        // let price = Number((newItem.price / 100).toFixed(2));
+        newItem.count += 1;
+        inCart.push(newItem);
+
+        totalUp()
+    } else {
+        totalUp()
+    }
+    // console.log('Cart', inCart)
 
     // Create Build
-    inCart.map(i => {
-        console.log(i.count);
-        i.count += 1;
+    function totalUp () {
+
+    inCart.map((i, index) => {
         itemPrice = Number((i.price / 100).toFixed(2));
 
         let li = document.createElement('li');
@@ -74,12 +81,14 @@ function cartBuild(item) {
         let sub = document.createElement('div');
 
         //Attributes:
+        li.id = `index_${index}`
         thisPlate.className = 'plate';
         img.src = `./images/${i.image}`;
         img.alt = i.alt;
         img.className = 'plate';
         qty.innerText = i.count;
         qty.className = 'quantity';
+        qty.id = `count_${index}`;
         content.className = 'content';
         title.className = 'menu-item';
         title.innerText = i.name;
@@ -87,10 +96,10 @@ function cartBuild(item) {
         cost.innerText = `$${itemPrice}`;
         qty_wrap.className = 'quantity__wrapper';
         decrease.className = 'decrease';
-        // decrease.setAttribute('onClick', () => decreaseCount());
+        decrease.onclick = () => decreaseCount(index);
         neg.src = './images/chevron.svg';
         increase.className = 'increase';
-        // increase.setAttribute('onClick', () => increaseCount());
+        increase.onclick = () => increaseCount(index);
         plus.src = './images/chevron.svg';
         sub.className = 'subtotal';
         sub.innerText = `$${itemPrice * i.count}`;
@@ -112,7 +121,12 @@ function cartBuild(item) {
         cart.appendChild(li);
         // cart.insertBefore(li, finalCost);
 
-    })
+        price = itemPrice;
+
+        // console.log('List Item:', li)
+        // console.log('Quantity:', index)
+        })
+    }
 
     console.log('AFTER CYCLE CART:', inCart)
     // Need to evaluate the total cost depending on the array set.
@@ -121,8 +135,6 @@ function cartBuild(item) {
 }
 
 function theBill() {
-    // console.log('The Bill',subTotals);
-    // console.log('SUBTOTAL', subTotal)
     
     subTotals.innerText = subTotal.toFixed(2);
     let applyTax = subTotal * taxRate;
@@ -132,20 +144,46 @@ function theBill() {
 }
 
 // For Plate Count alterations WIP
-function increaseCount() {
-    console.log('Increased Value')
+function increaseCount(index) {
+    // console.log('Item Count', inCart[index].count);
+    console.log('Item', inCart[index]);
+    inCart[index].count++;
+
+    cartBuild();
 }
 
-function decreaseCount() {
-    console.log('Increased Value')
+function decreaseCount(index) {
+    
+    if(inCart[0].count === 1) {
+        inCart.splice(index,1);
+        const removeItem = document.getElementById(`index_${index}`)
+        let btn = addBtns[index];
+        btn.className = 'add';
+        btn.removeChild(btn.children[0]);
+        btn.innerText = 'Add to Cart';
+
+        removeItem.parentNode.removeChild(removeItem);
+
+        cartBuild();
+
+    } else {
+        inCart[index].count--;
+        cartBuild();
+    }
 }
 
 /* NOTE: build status
     Fixed issue with mutliposting the same item depending on the length of the array. 
         - Current issues:
-            - Adding a count to previous plate when adding a second.
-            - Unable to increase/decrease count of single plate.
+            - Adding a count to previous plate when adding a second. (FIXED)
+            - Unable to increase/decrease count of single plate. (FIXED)
                 - Zero out plates, etc.
+                    - Removing item from cart.
+                    - Changing button in Menu to "add to cart"
+                        - Need to adjust btn not to continue to add to cart after "in cart".
+                    - Need to adjust subtotal to reflect removal
             - Adjust subtotals for final bill cost.
+
+            - Cost should probably be set as an array to match index of items.
 
 */
