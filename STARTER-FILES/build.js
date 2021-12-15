@@ -132,6 +132,7 @@ function cartBuild(item) {
     // Need to evaluate the total cost depending on the array set.
     subTotal += price;
     theBill()
+    console.log(subTotal)
 }
 
 function theBill() {
@@ -153,8 +154,9 @@ function increaseCount(index) {
 }
 
 function decreaseCount(index) {
-    
-    if(inCart[0].count === 1) {
+    console.log(index)
+
+    if(inCart[index].count === 1) {
         inCart.splice(index,1);
         const removeItem = document.getElementById(`index_${index}`)
         let btn = addBtns[index];
@@ -182,6 +184,7 @@ function decreaseCount(index) {
                     - Changing button in Menu to "add to cart"
                         - Need to adjust btn not to continue to add to cart after "in cart".
                     - Need to adjust subtotal to reflect removal
+                        - Consider if cart becomes empty
             - Adjust subtotals for final bill cost.
 
             - Cost should probably be set as an array to match index of items.
